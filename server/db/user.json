@@ -1,0 +1,20 @@
+[
+    {
+        "id": "3f19ad44-58db-48c9-ae33-9f9e16ef7836",
+        "username": "user1",
+        "email": "user1@mail.com",
+        "password": "user1",
+        "role": "user",
+        "phoneNumber": "08xxxxx",
+        "address": "08xxxxx"
+    },
+    {
+        "id": "694f4885-2c79-4d34-91fa-872b0847966a",
+        "username": "admin1",
+        "email": "admin1@mail.com",
+        "password": "admin1",
+        "role": "admin",
+        "phoneNumber": "08xxxxx",
+        "address": "08xxxxx"
+    }
+]

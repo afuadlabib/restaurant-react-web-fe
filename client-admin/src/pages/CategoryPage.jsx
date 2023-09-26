@@ -1,0 +1,120 @@
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import {
+  Card,
+  CardHeader,
+  Input,
+  Typography,
+  Button,
+  CardBody,
+  CardFooter,
+  Tabs,
+  TabsHeader,
+  Tab,
+} from '@material-tailwind/react';
+import React, { useEffect } from 'react';
+import BaseTableRow from '../components/BaseTableRow';
+import { useDispatch, useSelector } from 'react-redux';
+import { getDataCategories } from '../store/actions/action.creator';
+
+const TABS = [
+  {
+    label: 'All',
+    value: 'all',
+  },
+  {
+    label: 'Monitored',
+    value: 'monitored',
+  },
+  {
+    label: 'Unmonitored',
+    value: 'unmonitored',
+  },
+];
+
+import { Link } from 'react-router-dom';
+
+export default function CategoryPage() {
+  const { categories } = useSelector((state) => state.categories);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getDataCategories());
+  }, []);
+
+  return (
+    <div className="text-center">
+      <Card className="h-full w-full p-2">
+        <CardHeader
+          floated={false}
+          shadow={false}
+          className="rounded-none  z-40"
+        >
+          <div className="mb-8 flex items-center justify-between gap-8">
+            <div>
+              <Typography variant="h5" color="blue-gray">
+                Categories list
+              </Typography>
+              <Typography color="gray" className="mt-1 font-normal">
+                See information about all category
+              </Typography>
+            </div>
+            <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+              <Button variant="outlined" size="sm">
+                view all
+              </Button>
+              <Link to="/add-category">
+                <Button className="flex items-center gap-3" size="sm">
+                  Add Category
+                </Button>
+              </Link>
+            </div>
+          </div>
+          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+            <Tabs value="all" className="w-full md:w-max">
+              <TabsHeader>
+                {TABS.map(({ label, value }) => (
+                  <Tab key={value} value={value}>
+                    &nbsp;&nbsp;{label}&nbsp;&nbsp;
+                  </Tab>
+                ))}
+              </TabsHeader>
+            </Tabs>
+            <div className="w-full md:w-72">
+              <Input
+                label="Search"
+                icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+              />
+            </div>
+          </div>
+        </CardHeader>
+        <CardBody className="p-2 text-center">
+          <table className="table-auto w-full overflow-none p-8">
+            <thead className=" bg-gray-200" key="thead">
+              <tr className="">
+                <th>#</th>
+                <th>Name</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody key="tbody">
+              <BaseTableRow data={categories} />
+            </tbody>
+          </table>
+        </CardBody>
+        <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+          <Typography variant="small" color="blue-gray" className="font-normal">
+            Page 1 of 10
+          </Typography>
+          <div className="flex gap-2">
+            <Button variant="outlined" size="sm">
+              Previous
+            </Button>
+            <Button variant="outlined" size="sm">
+              Next
+            </Button>
+          </div>
+        </CardFooter>
+      </Card>
+    </div>
+  );
+}
